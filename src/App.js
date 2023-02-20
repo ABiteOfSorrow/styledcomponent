@@ -1,7 +1,7 @@
 import Button from "./styled/Button";
 import { StyledInput, SearchInput2, SpinnerInput } from "./styled/Input";
 import StyledContainer from "./styled/Container";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import searchImg from "./styled/search.png";
 import LoginContainer from "./styled/LoginContainer";
 import codeitImg from "./styled/codeit.png";
@@ -26,15 +26,14 @@ const GlobalStyle = createGlobalStyle`
 
 * {
     box-sizing: border-box;
-}
+};
 
 body {
-    background-color: #ffffff;
-      color: #ffffff;
+    background-color: ${({ theme }) => theme.backgroundColor};
+    color: ${({ theme }) => theme.color};
     font-family: sans-serif;
   }
-
-`
+`;
 
 // css heritage
 const SearchInput1 = styled(StyledInput)`
@@ -54,31 +53,33 @@ const MarkImg = styled.img`
 const Discription = styled.div`
     color: #848187;
     text-align: center;
-`
+`;
 
 const Label = styled.label`
     color: #e1c6f7;
-`
+`;
 
 
 function App() {
     
-    const [theme, setTheme] = useState({
-        primaryColor: '#1da1f2',
-    });
+    const [theme, setTheme] = useState(THEMES['light']);
 
     const handleColorChange = (e) => {
-        setTheme((prevTheme) => ({
-            ...prevTheme,
-            primaryColor: e.target.value,
-        })
-    )
-}
+        const nextThemeName = e.target.value;
+        setTheme(THEMES[nextThemeName]);
+};
 
 
   return (
     <>        
-<GlobalStyle />
+
+<ThemeProvider theme={theme}>
+    <GlobalStyle />
+        <select onChange={handleColorChange} >
+            <option value="light">라이트모드</option>
+            <option value="dark">다크모드</option>
+        </select>
+
         <LoginContainer>
             <MarkImg src={codeitImg} alt="codeit"/>
             <Discription>회원이 아니신가요?<Link>회원가입 하기</Link></Discription>
@@ -139,7 +140,7 @@ function App() {
 
       <SpinnerInput loading/>
     </StyledContainer>
-
+    </ThemeProvider>
     </>
   );
 }
