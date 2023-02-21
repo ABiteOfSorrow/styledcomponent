@@ -7,7 +7,7 @@ import LoginContainer from "./styled/LoginContainer";
 import codeitImg from "./styled/codeit.png";
 import Link from "./styled/Link";
 import LoginInput from "./styled/LoginInput";
-import {LoginButton, KakaoLoginButton} from "./styled/LoginButton";
+import {LoginButton, KakaoLoginButton, SimpleLoginButton} from "./styled/LoginButton";
 import { useState } from "react";
 
 const THEMES = {
@@ -87,7 +87,7 @@ function App() {
             <LoginInput error type="email" id="email" placeholder="styled@codeit.kr" />
             <Label for="password">비밀번호</Label>
             <LoginInput type="password" id="password" placeholder="비밀번호" />
-            <LoginButton>로그인 하기</LoginButton>
+            <SimpleLoginButton loading>로그인 하기</SimpleLoginButton>
             <KakaoLoginButton>카카오 로그인</KakaoLoginButton>
         </LoginContainer>
 

@@ -25,7 +25,7 @@ const Rotate = keyframes`
     100% {
         transform: rotate(360deg);
   }
-`
+`;
 
 const Spinner = styled.div`
   width: 16px;

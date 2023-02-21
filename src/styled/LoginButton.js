@@ -1,17 +1,35 @@
-import styled, {css} from "styled-components";
+import styled, {css, keyframes} from "styled-components";
 import kakaoButton from "./kakao.svg";
+import spinnerImg from './spinner.png';
+import ButtonSpinner from "./Spinner";
+
 
 const round = css`
     border-radius: ${({round}) => round ? `9999px` : `8px`};
 `
 
+const Rotate = keyframes`
+    100% {
+        transform: rotate(360deg);
+    }
+`;
+
+const Spinner = styled.div`
+width: 16px;
+height: 16px;
+background-image: url('${spinnerImg}');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+`;
+
 const Icon = styled.img`
     height: 24px;
     width: 24px;
     margin-right: 8px;
-`
+`;
 
-export const LoginButton = styled.button`
+const LoginButton = styled.SimpleLoginButton`
     width: 100%;
     ${round};
     background-color: #6500c3;
@@ -25,7 +43,14 @@ export const LoginButton = styled.button`
         background-color: #7760b4;
     }
 
-`
+`;
+
+export function SimpleLoginButton({loading, children, ...buttonProps}) {
+    return (
+        <LoginButton {...buttonProps}>{loading? <ButtonSpinner /> :  {children} }</LoginButton>
+    )
+}
+
 
  const StyledKakaoLoginButton = styled.button`
     width: 100%;
@@ -44,13 +69,12 @@ export const LoginButton = styled.button`
     &:hover {
         background-color: #fee500;
     }
-`
+`;
 
-export function KakaoLoginButton({children, ...buttonProps}) {
+export function KakaoLoginButton({loading, children, ...buttonProps}) {
     return (
         <StyledKakaoLoginButton {...buttonProps}>
-            <Icon src={kakaoButton} alt="kakao" />
-                {children}
+            {loading? <ButtonSpinner /> : <Icon src={kakaoButton} alt="kakao" />} {children} 
         </StyledKakaoLoginButton>
     )
 }
